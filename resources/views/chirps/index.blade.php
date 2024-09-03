@@ -33,27 +33,30 @@
                                 <span class="text-gray-800 dark:text-gray-200">{{$chirp->user->name}}</span>
                                 <!-- <small class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{$chirp->created_at->diffForHumans()}}</small> -->
                                 <small class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{$chirp->created_at->format('d-m-Y g:i A')}}</small>
-                                @if ( $chirp->created_at != $chirp->updated_at )
+                                
+                                @unless ( $chirp->created_at->eq( $chirp->updated_at ) )
                                     <small class="ml-2 text-sm text-gray-600 dark:text-gray-400">&middot; {{ __('edited') }}</small>
-                                @endif
+                                @endunless
                             </div>
                         </div>
                         <p class="mt-4 text-lg text-gray-900 dark:text-gray-100">{{$chirp->message}}</p>
 
                     </div>
                     <!-- <a href="{{route('chirps.edit',$chirp)}}">{{__('Edit Chirp')}}</a> -->
-                    <x-dropdown>
-                        <x-slot name="trigger">
-                            <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"></path>
-                            </svg>
-                        </x-slot>
-                        <x-slot name="content">
-                            <x-dropdown-link :href="route('chirps.edit',$chirp)">
-                                {{__('Edit Chirp')}}
-                            </x-dropdown-link>
-                        </x-slot>
-                    </x-dropdown>
+                     @can('update',$chirp)
+                        <x-dropdown>
+                            <x-slot name="trigger">
+                                <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" data-slot="icon" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"></path>
+                                </svg>
+                            </x-slot>
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('chirps.edit',$chirp)">
+                                    {{__('Edit Chirp')}}
+                                </x-dropdown-link>
+                            </x-slot>
+                        </x-dropdown>
+                     @endcan
                 </div>
                 @endforeach
             </div>
