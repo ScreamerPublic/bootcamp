@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/chirps', [ChirpController::class,'store'])->name('chirps.store');
     Route::get('/chirps/{chirp}/edit', [ChirpController::class,'edit'])->name('chirps.edit');
     Route::put('/chirps/{chirp}', [ChirpController::class,'update'])->name('chirps.update');
+    
+    Route::delete('/chirps/{chirp}', [ChirpController::class,'destroy'])->name('chirps.destroy');
 });
 
 require __DIR__.'/auth.php';
